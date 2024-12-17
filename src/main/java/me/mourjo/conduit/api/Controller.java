@@ -1,6 +1,7 @@
 package me.mourjo.conduit.api;
 
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -12,6 +13,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 public class Controller {
 
     final ExecutorService executor = Executors.newFixedThreadPool(5);
+    Random r = new Random();
 
     @GetMapping("/hello")
     public DeferredResult<Map<String, String>> hello(){
@@ -23,7 +25,7 @@ public class Controller {
         var result = new DeferredResult<Map<String, String>>();
         executor.submit(() -> {
             try {
-                Thread.sleep(3000);
+                Thread.sleep(4000 + r.nextInt(1000));
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
