@@ -17,5 +17,5 @@ mvn spring-boot:run
 ### Grafana
 
 - Grafana runs on [localhost:3000](localhost:3000)
-- Default user/password `admin`, updated user/password `admin123`
+- Default user/password `admin`, updated to `admin` and `admin123`
 - Use `Prometheus server URL` as `host.docker.internal:9090`
