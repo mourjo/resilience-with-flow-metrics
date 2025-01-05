@@ -1,4 +1,4 @@
-package me.mourjo.conduit.api;
+package me.mourjo.conduit.nls.server.api;
 
 import java.util.Map;
 import java.util.Random;

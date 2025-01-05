@@ -1,4 +1,4 @@
-package me.mourjo.conduit.client;
+package me.mourjo.conduit.nls.server.client;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;

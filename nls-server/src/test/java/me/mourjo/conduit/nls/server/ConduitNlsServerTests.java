@@ -1,10 +1,10 @@
-package me.mourjo.conduit;
+package me.mourjo.conduit.nls.server;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ConduitApplicationTests {
+class ConduitNlsServerTests {
 
 	@Test
 	void contextLoads() {
