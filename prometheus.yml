@@ -2,7 +2,7 @@ global:
   scrape_interval: 5s
 
 scrape_configs:
-  - job_name: 'conduit-scraper'
+  - job_name: 'conduit-nls-server-scraper'
     metrics_path: '/actuator/prometheus'
     # host.docker.internal is a special DNS name that
     # allows Docker containers to communicate with services
@@ -10,4 +10,10 @@ scrape_configs:
     static_configs:
       - targets: ['host.docker.internal:8080']
         labels:
-          application: 'conduit'
+          application: 'nls-server'
+  - job_name: 'conduit-nls-client-scraper'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['host.docker.internal:8081']
+        labels:
+          application: 'nls-client'
