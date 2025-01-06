@@ -53,3 +53,8 @@ buildNumber.properties
 .classpath
 
 .DS_Store
+
+
+ls-server/ls-server.log
+nls-client/nls-client.log
+nls-server/nls-server.log
