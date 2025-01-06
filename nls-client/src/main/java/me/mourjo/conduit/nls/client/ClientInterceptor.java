@@ -24,6 +24,9 @@ public class ClientInterceptor implements ClientHttpRequestInterceptor {
         Instant start = Instant.now();
 
         try {
+            meterRegistry.counter("http.client.requests.initiated", "uri", uri,
+                "method", method).increment(1d);
+
             ClientHttpResponse response = execution.execute(request, body);
 
             meterRegistry.timer("http.client.requests",
@@ -40,6 +43,9 @@ public class ClientInterceptor implements ClientHttpRequestInterceptor {
                     "status", "error")
                 .record(Duration.between(start, Instant.now()));
             throw e;
+        } finally {
+            meterRegistry.counter("http.client.requests.completed", "uri", uri,
+                "method", method).increment(1d);
         }
     }
 }
