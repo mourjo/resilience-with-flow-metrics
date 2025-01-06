@@ -17,3 +17,9 @@ scrape_configs:
       - targets: ['host.docker.internal:8081']
         labels:
           application: 'nls-client'
+  - job_name: 'conduit-ls-server-scraper'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['host.docker.internal:7070']
+        labels:
+          application: 'ls-server'
