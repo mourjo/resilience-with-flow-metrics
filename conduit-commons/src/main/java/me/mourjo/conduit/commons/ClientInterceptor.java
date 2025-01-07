@@ -1,5 +1,4 @@
-package me.mourjo.conduit.ls.client;
-
+package me.mourjo.conduit.commons;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import java.io.IOException;
@@ -12,7 +11,7 @@ import org.springframework.http.client.ClientHttpResponse;
 
 public class ClientInterceptor implements ClientHttpRequestInterceptor {
 
-    private final MeterRegistry meterRegistry;
+    protected final MeterRegistry meterRegistry;
 
     public ClientInterceptor(MeterRegistry meterRegistry) {
         this.meterRegistry = meterRegistry;

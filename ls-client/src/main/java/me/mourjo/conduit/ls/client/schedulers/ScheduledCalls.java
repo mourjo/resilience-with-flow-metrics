@@ -9,11 +9,11 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
-import me.mourjo.conduit.ls.client.ClientInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import me.mourjo.conduit.commons.ClientInterceptor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.client.RestClient;
 

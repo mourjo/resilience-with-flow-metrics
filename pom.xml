@@ -14,6 +14,7 @@
     <module>nls-server</module>
     <module>ls-server</module>
     <module>ls-client</module>
+    <module>conduit-commons</module>
   </modules>
   <dependencyManagement>
     <dependencies>

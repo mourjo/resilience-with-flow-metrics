@@ -6,7 +6,7 @@
     <artifactId>conduit</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>ls-client</artifactId>
+  <artifactId>conduit-commons</artifactId>
 
   <properties>
     <maven.compiler.source>21</maven.compiler.source>
@@ -18,11 +18,13 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
@@ -34,12 +36,7 @@
     <dependency>
       <groupId>io.micrometer</groupId>
       <artifactId>micrometer-registry-prometheus</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>me.mourjo</groupId>
-      <artifactId>conduit-commons</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <scope>provided</scope>
     </dependency>
 
   </dependencies>

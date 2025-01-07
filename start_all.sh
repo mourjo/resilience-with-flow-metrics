@@ -6,7 +6,7 @@ APP2_DIR="/Users/mourjo/repos/monster-scale-2025/nls-server"
 APP3_DIR="/Users/mourjo/repos/monster-scale-2025/nls-client"
 APP4_DIR="/Users/mourjo/repos/monster-scale-2025/ls-client"
 pwd
-mvn clean package -DskipTests
+mvn clean install -DskipTests
 
 echo "Starting ls-server..."
 cd $APP1_DIR || exit 1
