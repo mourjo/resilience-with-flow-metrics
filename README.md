@@ -19,3 +19,11 @@ mvn spring-boot:run
 - Grafana runs on [localhost:3000](localhost:3000)
 - Default user/password `admin`, updated to `admin` and `admin123`
 - Use `Prometheus server URL` as `host.docker.internal:9090`
+
+
+## Notes
+
+I generated the modules using
+```bash
+mvn archetype:generate -DgroupId=me.mourjo -DartifactId=ls-client -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+```

@@ -58,3 +58,4 @@ buildNumber.properties
 ls-server/ls-server.log
 nls-client/nls-client.log
 nls-server/nls-server.log
+ls-client/ls-client.log

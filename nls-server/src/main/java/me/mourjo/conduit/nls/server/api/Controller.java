@@ -29,7 +29,7 @@ public class Controller {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            result.setResult(Map.of("message", "Hello World!"));
+            result.setResult(Map.of("message", "Hello from NLS Server!"));
         });
 
         return result;

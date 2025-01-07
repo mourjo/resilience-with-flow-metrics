@@ -13,6 +13,7 @@
     <module>nls-client</module>
     <module>nls-server</module>
     <module>ls-server</module>
+    <module>ls-client</module>
   </modules>
   <dependencyManagement>
     <dependencies>

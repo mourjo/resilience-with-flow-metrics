@@ -1,16 +1,15 @@
-package me.mourjo.conduit.nls.client.schedulers;
+package me.mourjo.conduit.ls.client.schedulers;
 
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
-import me.mourjo.conduit.nls.client.ClientInterceptor;
+import me.mourjo.conduit.ls.client.ClientInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
@@ -39,7 +38,7 @@ public class ScheduledCalls {
     public ScheduledCalls(MeterRegistry meterRegistry) {
         this.restClient = RestClient.builder()
             .requestInterceptor(new ClientInterceptor(meterRegistry))
-            .baseUrl("http://localhost:8080")
+            .baseUrl("http://localhost:7070")
             .build();
 
         this.inflightCounter = new AtomicInteger(0);
