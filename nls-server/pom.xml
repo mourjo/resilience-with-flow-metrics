@@ -32,6 +32,12 @@
       <groupId>io.micrometer</groupId>
     </dependency>
 
+    <dependency>
+      <groupId>me.mourjo</groupId>
+      <artifactId>conduit-commons</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+
   </dependencies>
 
   <modelVersion>4.0.0</modelVersion>
