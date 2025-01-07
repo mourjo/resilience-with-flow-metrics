@@ -1,4 +1,4 @@
-package me.mourjo.conduit.commons;
+package me.mourjo.conduit.commons.client;
 
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -14,41 +14,40 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestClient;
 
 
-public abstract class ClientCalls {
+public abstract class ClientRequests {
 
-    protected static final Logger logger = LoggerFactory.getLogger(ClientCalls.class);
+    protected static final Logger logger = LoggerFactory.getLogger(ClientRequests.class);
     protected final ExecutorService executorService;
     protected final MeterRegistry meterRegistry;
     protected final int DEFAULT_CONCURRENCY = 1;
     protected final String CONCURRENCY_SETTING_FILE_PATH = "../common_concurrent_requests.txt";
     protected final RestClient restClient;
 
-    protected final AtomicInteger inflightCounter;
+    protected final AtomicInteger inFlightCounter;
     protected final AtomicInteger concurrencyGauge;
 
 
-    public ClientCalls(MeterRegistry meterRegistry, String baseUrl) {
+    public ClientRequests(MeterRegistry meterRegistry, String baseUrl) {
         this.restClient = RestClient.builder()
             .requestInterceptor(new ClientInterceptor(meterRegistry))
             .baseUrl(baseUrl)
             .build();
 
-        this.inflightCounter = new AtomicInteger(0);
+        this.inFlightCounter = new AtomicInteger(0);
 
         this.meterRegistry = meterRegistry;
         this.executorService = Executors.newVirtualThreadPerTaskExecutor();
         concurrencyGauge = new AtomicInteger();
 
         Gauge.builder("http.client.requests.concurrency", concurrencyGauge, AtomicInteger::get)
-            .description("A custom gauge example")
             .register(meterRegistry);
 
     }
 
-    protected final void makeRequests() {
+    protected final void requestBatch() {
         int requestCount = concurrency();
         logger.info("Firing %d requests (already in flight %d)".formatted(requestCount,
-            inflightCounter.get()));
+            inFlightCounter.get()));
         for (int i = 0; i < requestCount; i++) {
             executorService.submit(this::fireRequest);
         }
@@ -78,7 +77,7 @@ public abstract class ClientCalls {
 
     private void fireRequest() {
         try {
-            inflightCounter.incrementAndGet();
+            inFlightCounter.incrementAndGet();
             String response = restClient.get()
                 .uri("/hello")
                 .retrieve()
@@ -88,7 +87,7 @@ public abstract class ClientCalls {
         } catch (Exception e) {
             logger.error("Failed to get response", e);
         } finally {
-            inflightCounter.decrementAndGet();
+            inFlightCounter.decrementAndGet();
         }
     }
 }

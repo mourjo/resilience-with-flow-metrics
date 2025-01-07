@@ -21,7 +21,7 @@ public class Controller {
     }
 
     private DeferredResult<Map<String, String>> submit() {
-        var result = new DeferredResult<Map<String, String>>();
+        var result = new DeferredResult<Map<String, String>>(10000L);
         executor.submit(() -> {
             try {
                 Thread.sleep(4000 + r.nextInt(1000));

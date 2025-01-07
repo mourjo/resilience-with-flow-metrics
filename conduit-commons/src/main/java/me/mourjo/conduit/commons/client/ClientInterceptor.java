@@ -1,4 +1,4 @@
-package me.mourjo.conduit.commons;
+package me.mourjo.conduit.commons.client;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import java.io.IOException;

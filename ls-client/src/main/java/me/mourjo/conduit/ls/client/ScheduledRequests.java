@@ -1,7 +1,7 @@
-package me.mourjo.conduit.nls.client.schedulers;
+package me.mourjo.conduit.ls.client;
 
 import io.micrometer.core.instrument.MeterRegistry;
-import me.mourjo.conduit.commons.ClientCalls;
+import me.mourjo.conduit.commons.client.ClientRequests;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -9,15 +9,15 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 @EnableScheduling
 @Configuration
-public class ScheduledCalls extends ClientCalls {
+public class ScheduledRequests extends ClientRequests {
 
 
-    public ScheduledCalls(MeterRegistry meterRegistry) {
-        super(meterRegistry, "http://localhost:8080");
+    public ScheduledRequests(MeterRegistry meterRegistry) {
+        super(meterRegistry, "http://localhost:7070");
     }
 
     @Scheduled(fixedRate = 10000)
     public void scheduledCalls() {
-        makeRequests();
+        requestBatch();
     }
 }
