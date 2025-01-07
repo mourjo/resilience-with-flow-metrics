@@ -18,6 +18,8 @@ cd $APP2_DIR || exit 1
 mvn spring-boot:run > nls-server.log 2>&1 &
 NLS_SERVER_PID=$!
 
+sleep 5;
+
 echo "Starting nls-client..."
 cd $APP3_DIR || exit 1
 mvn spring-boot:run > nls-client.log 2>&1 &
