@@ -1,4 +1,5 @@
 package me.mourjo.conduit.commons;
+
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import java.io.File;
@@ -15,13 +16,11 @@ import org.springframework.web.client.RestClient;
 
 public abstract class ClientCalls {
 
+    protected static final Logger logger = LoggerFactory.getLogger(ClientCalls.class);
     protected final ExecutorService executorService;
-
     protected final MeterRegistry meterRegistry;
     protected final int DEFAULT_CONCURRENCY = 1;
     protected final String CONCURRENCY_SETTING_FILE_PATH = "../common_concurrent_requests.txt";
-
-    protected static final Logger logger = LoggerFactory.getLogger(ClientCalls.class);
     protected final RestClient restClient;
 
     protected final AtomicInteger inflightCounter;

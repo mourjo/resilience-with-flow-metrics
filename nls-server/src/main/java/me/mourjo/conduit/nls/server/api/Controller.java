@@ -2,7 +2,6 @@ package me.mourjo.conduit.nls.server.api;
 
 import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +15,12 @@ public class Controller {
     Random r = new Random();
 
     @GetMapping("/hello")
-    public DeferredResult<Map<String, String>> hello(){
+    public DeferredResult<Map<String, String>> hello() {
 
         return submit();
     }
 
-    private DeferredResult<Map<String, String>> submit(){
+    private DeferredResult<Map<String, String>> submit() {
         var result = new DeferredResult<Map<String, String>>();
         executor.submit(() -> {
             try {

@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class NonLoadSheddingClient {
 
-	public static void main(String[] args) {
-		SpringApplication.run(NonLoadSheddingClient.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(NonLoadSheddingClient.class, args);
+    }
 
 }

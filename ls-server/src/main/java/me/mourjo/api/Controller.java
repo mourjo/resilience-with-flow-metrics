@@ -15,12 +15,12 @@ public class Controller {
     Random r = new Random();
 
     @GetMapping("/hello")
-    public DeferredResult<Map<String, String>> hello(){
+    public DeferredResult<Map<String, String>> hello() {
 
         return submit();
     }
 
-    private DeferredResult<Map<String, String>> submit(){
+    private DeferredResult<Map<String, String>> submit() {
         var result = new DeferredResult<Map<String, String>>();
         executor.submit(() -> {
             try {

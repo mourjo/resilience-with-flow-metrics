@@ -18,7 +18,8 @@ public class ClientInterceptor implements ClientHttpRequestInterceptor {
     }
 
     @Override
-    public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
+    public ClientHttpResponse intercept(HttpRequest request, byte[] body,
+        ClientHttpRequestExecution execution) throws IOException {
         String uri = request.getURI().toString();
         String method = request.getMethod().name();
         Instant start = Instant.now();

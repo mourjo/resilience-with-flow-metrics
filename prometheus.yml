@@ -8,24 +8,24 @@ scrape_configs:
     # allows Docker containers to communicate with services
     # running on the host machine.
     static_configs:
-      - targets: ['host.docker.internal:8080']
+      - targets: [ 'host.docker.internal:8080' ]
         labels:
           application: 'nls-server'
   - job_name: 'conduit-nls-client-scraper'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: ['host.docker.internal:8081']
+      - targets: [ 'host.docker.internal:8081' ]
         labels:
           application: 'nls-client'
   - job_name: 'conduit-ls-server-scraper'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: ['host.docker.internal:7070']
+      - targets: [ 'host.docker.internal:7070' ]
         labels:
           application: 'ls-server'
   - job_name: 'conduit-ls-client-scraper'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: ['host.docker.internal:7071']
+      - targets: [ 'host.docker.internal:7071' ]
         labels:
           application: 'ls-client'
