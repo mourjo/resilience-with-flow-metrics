@@ -27,8 +27,8 @@
     </dependency>
 
     <dependency>
-      <groupId>me.mourjo</groupId>
       <artifactId>conduit-commons</artifactId>
+      <groupId>me.mourjo</groupId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
 

@@ -15,8 +15,8 @@ import org.springframework.web.context.request.async.DeferredResult;
 public class Controller {
 
     final ExecutorService executor = Executors.newFixedThreadPool(5);
-    Random r = new Random();
     private final MeterRegistry meterRegistry;
+    Random r = new Random();
 
     public Controller(MeterRegistry meterRegistry) {
         this.meterRegistry = meterRegistry;
