@@ -5,6 +5,7 @@ import io.micrometer.core.instrument.MeterRegistry;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Paths;
+import java.time.Instant;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -80,6 +81,7 @@ public abstract class ClientRequests {
             inFlightCounter.incrementAndGet();
             String response = restClient.get()
                 .uri("/hello")
+                .header("X-Client-Request-Timestamp-Millis", String.valueOf(Instant.now().toEpochMilli()))
                 .retrieve()
                 .body(String.class);
 

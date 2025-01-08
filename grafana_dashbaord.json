@@ -121,13 +121,30 @@
         {
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "sum by(application) (rate(conduit_http_server_processing_time_seconds_sum{application=\"nls-server\", uri!=\"/actuator/prometheus\"}[1m])) / sum by(application) (rate(conduit_http_server_processing_time_seconds_count{application=\"nls-server\", uri!=\"/actuator/prometheus\"}[1m]))",
+          "expr": "conduit_http_server_processing_time_seconds_max{application=\"nls-server\", uri!=\"/actuator/prometheus\"}",
           "fullMetaSearch": false,
           "hide": false,
           "includeNullMetadata": true,
           "legendFormat": "Processing time",
           "range": true,
           "refId": "A",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "ce75u9s79ks1sa"
+          },
+          "disableTextWrap": false,
+          "editorMode": "code",
+          "expr": "conduit_http_server_processing_delay_seconds_max{application=\"nls-server\"}",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "Delay",
+          "range": true,
+          "refId": "B",
           "useBackend": false
         }
       ],
@@ -818,7 +835,7 @@
         {
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "sum by(application) (rate(conduit_http_server_processing_time_seconds_sum{application=\"ls-server\", uri!=\"/actuator/prometheus\"}[1m])) / sum by(application) (rate(conduit_http_server_processing_time_seconds_count{application=\"ls-server\", uri!=\"/actuator/prometheus\"}[1m]))",
+          "expr": "conduit_http_server_processing_time_seconds_max{application=\"ls-server\", uri!=\"/actuator/prometheus\"}",
           "fullMetaSearch": false,
           "hide": false,
           "includeNullMetadata": true,
@@ -826,6 +843,19 @@
           "range": true,
           "refId": "A",
           "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "ce75u9s79ks1sa"
+          },
+          "editorMode": "code",
+          "expr": "conduit_http_server_processing_delay_seconds_max{application=\"ls-server\"}",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "Delay",
+          "range": true,
+          "refId": "B"
         }
       ],
       "title": "Request processing time",
@@ -1444,6 +1474,6 @@
   "timezone": "browser",
   "title": "Conduit",
   "uid": "be75v3n03qhvkd",
-  "version": 56,
+  "version": 60,
   "weekStart": ""
 }
