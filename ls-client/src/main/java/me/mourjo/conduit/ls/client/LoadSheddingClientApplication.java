@@ -1,13 +1,13 @@
-package me.mourjo.conduit.ls.server;
+package me.mourjo.conduit.ls.client;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LoadSheddingServer {
+public class LoadSheddingClientApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(LoadSheddingServer.class, args);
+        SpringApplication.run(LoadSheddingClientApplication.class, args);
     }
 
 }

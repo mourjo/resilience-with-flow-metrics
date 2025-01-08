@@ -1,10 +1,10 @@
-package me.mourjo.conduit.ls.server;
+package me.mourjo.conduit.nls.client;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest(classes = LoadSheddingServer.class)
-class ConduitLsServerTests {
+@SpringBootTest(classes = NonLoadSheddingClientApplication.class)
+class SpringContextLoadTest {
 
     @Test
     void contextLoads() {

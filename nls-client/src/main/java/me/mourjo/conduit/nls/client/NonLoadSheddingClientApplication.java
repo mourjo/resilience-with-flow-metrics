@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NonLoadSheddingClient {
+public class NonLoadSheddingClientApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(NonLoadSheddingClient.class, args);
+        SpringApplication.run(NonLoadSheddingClientApplication.class, args);
     }
 
 }
