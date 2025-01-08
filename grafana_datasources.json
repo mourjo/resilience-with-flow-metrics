@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "uid": "ce75u9s79ks1sa",
+    "orgId": 1,
+    "name": "prometheus",
+    "type": "prometheus",
+    "typeName": "Prometheus",
+    "typeLogoUrl": "public/app/plugins/datasource/prometheus/img/prometheus_logo.svg",
+    "access": "proxy",
+    "url": "http://host.docker.internal:9090",
+    "user": "",
+    "database": "",
+    "basicAuth": false,
+    "isDefault": true,
+    "jsonData": {
+      "httpMethod": "POST"
+    },
+    "readOnly": false
+  }
+]

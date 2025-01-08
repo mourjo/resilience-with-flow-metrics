@@ -17,7 +17,7 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "graphTooltip": 1,
+  "graphTooltip": 2,
   "id": 1,
   "links": [],
   "panels": [
@@ -121,17 +121,17 @@
         {
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "sum by(application) (rate(http_server_requests_seconds_sum{application=\"nls-server\", uri!=\"/actuator/prometheus\"}[1m])) / sum by(application) (rate(http_server_requests_seconds_count{application=\"nls-server\", uri!=\"/actuator/prometheus\"}[1m]))",
+          "expr": "sum by(application) (rate(conduit_http_server_processing_time_seconds_sum{application=\"nls-server\", uri!=\"/actuator/prometheus\"}[1m])) / sum by(application) (rate(conduit_http_server_processing_time_seconds_count{application=\"nls-server\", uri!=\"/actuator/prometheus\"}[1m]))",
           "fullMetaSearch": false,
           "hide": false,
           "includeNullMetadata": true,
-          "legendFormat": "Average Latency",
+          "legendFormat": "Processing time",
           "range": true,
           "refId": "A",
           "useBackend": false
         }
       ],
-      "title": "Request duration",
+      "title": "Request processing time",
       "type": "timeseries"
     },
     {
@@ -306,7 +306,7 @@
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "auto",
+            "showPoints": "always",
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -357,7 +357,7 @@
         {
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "jvm_threads_states_threads{application=\"nls-server\"}",
+          "expr": "sum by(application) (jvm_threads_states_threads{application=\"nls-server\"})",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "legendFormat": "{{state}}",
@@ -818,17 +818,17 @@
         {
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "sum by(application) (rate(http_server_requests_seconds_sum{application=\"ls-server\", uri!=\"/actuator/prometheus\"}[1m])) / sum by(application) (rate(http_server_requests_seconds_count{application=\"ls-server\", uri!=\"/actuator/prometheus\"}[1m]))",
+          "expr": "sum by(application) (rate(conduit_http_server_processing_time_seconds_sum{application=\"ls-server\", uri!=\"/actuator/prometheus\"}[1m])) / sum by(application) (rate(conduit_http_server_processing_time_seconds_count{application=\"ls-server\", uri!=\"/actuator/prometheus\"}[1m]))",
           "fullMetaSearch": false,
           "hide": false,
           "includeNullMetadata": true,
-          "legendFormat": "Average Latency",
+          "legendFormat": "Processing time",
           "range": true,
           "refId": "A",
           "useBackend": false
         }
       ],
-      "title": "Request duration",
+      "title": "Request processing time",
       "type": "timeseries"
     },
     {
@@ -1003,7 +1003,7 @@
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "auto",
+            "showPoints": "always",
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -1054,7 +1054,7 @@
         {
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "jvm_threads_states_threads{application=\"ls-server\"}",
+          "expr": "sum by(application) (jvm_threads_states_threads{application=\"ls-server\"})",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "legendFormat": "{{state}}",
@@ -1444,6 +1444,6 @@
   "timezone": "browser",
   "title": "Conduit",
   "uid": "be75v3n03qhvkd",
-  "version": 50,
+  "version": 56,
   "weekStart": ""
 }
