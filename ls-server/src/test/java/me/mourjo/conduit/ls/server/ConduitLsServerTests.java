@@ -1,4 +1,4 @@
-package me.mourjo;
+package me.mourjo.conduit.ls.server;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package me.mourjo;
+package me.mourjo.conduit.ls.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

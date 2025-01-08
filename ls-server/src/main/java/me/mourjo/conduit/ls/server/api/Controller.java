@@ -1,4 +1,4 @@
-package me.mourjo.api;
+package me.mourjo.conduit.ls.server.api;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import java.time.Duration;
