@@ -489,7 +489,7 @@
         {
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "http_client_requests_seconds_max{application=\"nls-client\"}",
+          "expr": "max by(application) (http_client_requests_seconds_max{application=\"nls-client\"})",
           "fullMetaSearch": false,
           "hide": false,
           "includeNullMetadata": true,
@@ -1199,7 +1199,7 @@
         {
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "http_client_requests_seconds_max{application=\"ls-client\"}",
+          "expr": "max by(application) (http_client_requests_seconds_max{application=\"ls-client\"})",
           "fullMetaSearch": false,
           "hide": false,
           "includeNullMetadata": true,
@@ -1474,6 +1474,6 @@
   "timezone": "browser",
   "title": "Conduit",
   "uid": "be75v3n03qhvkd",
-  "version": 60,
+  "version": 62,
   "weekStart": ""
 }
