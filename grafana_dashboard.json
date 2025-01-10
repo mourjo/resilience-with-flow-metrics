@@ -631,7 +631,9 @@
         "fullHighlight": false,
         "groupWidth": 0.7,
         "legend": {
-          "calcs": [],
+          "calcs": [
+            "last"
+          ],
           "displayMode": "list",
           "placement": "bottom",
           "showLegend": true
@@ -1411,7 +1413,9 @@
         "fullHighlight": false,
         "groupWidth": 0.7,
         "legend": {
-          "calcs": [],
+          "calcs": [
+            "last"
+          ],
           "displayMode": "list",
           "placement": "bottom",
           "showLegend": true
@@ -1904,6 +1908,6 @@
   "timezone": "browser",
   "title": "Conduit",
   "uid": "be75v3n03qhvkd",
-  "version": 77,
+  "version": 78,
   "weekStart": ""
 }
