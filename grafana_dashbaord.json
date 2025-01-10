@@ -93,7 +93,38 @@
           },
           "unit": "s"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Delay"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Processing time"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -120,12 +151,12 @@
       "targets": [
         {
           "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "conduit_http_server_processing_time_seconds_max{application=\"nls-server\", uri!=\"/actuator/prometheus\"}",
+          "editorMode": "code",
+          "expr": "rate(conduit_http_server_processing_delay_seconds_sum{application=\"nls-server\"}[1m]) / rate(conduit_http_server_processing_delay_seconds_count{application=\"nls-server\"}[1m])",
           "fullMetaSearch": false,
           "hide": false,
           "includeNullMetadata": true,
-          "legendFormat": "Processing time",
+          "legendFormat": "Delay",
           "range": true,
           "refId": "A",
           "useBackend": false
@@ -137,12 +168,12 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "conduit_http_server_processing_delay_seconds_max{application=\"nls-server\"}",
+          "expr": "rate(conduit_http_server_processing_time_seconds_sum{application=\"nls-server\"}[1m]) / rate(conduit_http_server_processing_time_seconds_count{application=\"nls-server\"}[1m])",
           "fullMetaSearch": false,
           "hide": false,
           "includeNullMetadata": true,
           "instant": false,
-          "legendFormat": "Delay",
+          "legendFormat": "Processing time",
           "range": true,
           "refId": "B",
           "useBackend": false
@@ -807,7 +838,38 @@
           },
           "unit": "s"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Delay"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Processing time"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -833,15 +895,20 @@
       "pluginVersion": "11.4.0",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "ce75u9s79ks1sa"
+          },
           "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "conduit_http_server_processing_time_seconds_max{application=\"ls-server\", uri!=\"/actuator/prometheus\"}",
+          "editorMode": "code",
+          "expr": "rate(conduit_http_server_processing_delay_seconds_sum{application=\"ls-server\"}[1m]) / rate(conduit_http_server_processing_delay_seconds_count{application=\"ls-server\"}[1m])",
           "fullMetaSearch": false,
           "hide": false,
           "includeNullMetadata": true,
-          "legendFormat": "Processing time",
+          "instant": false,
+          "legendFormat": "Delay",
           "range": true,
-          "refId": "A",
+          "refId": "C",
           "useBackend": false
         },
         {
@@ -849,13 +916,17 @@
             "type": "prometheus",
             "uid": "ce75u9s79ks1sa"
           },
+          "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "conduit_http_server_processing_delay_seconds_max{application=\"ls-server\"}",
+          "expr": "rate(conduit_http_server_processing_time_seconds_sum{application=\"ls-server\"}[1m]) / rate(conduit_http_server_processing_time_seconds_count{application=\"ls-server\"}[1m])",
+          "fullMetaSearch": false,
           "hide": false,
+          "includeNullMetadata": false,
           "instant": false,
-          "legendFormat": "Delay",
+          "legendFormat": "Processing time",
           "range": true,
-          "refId": "B"
+          "refId": "D",
+          "useBackend": false
         }
       ],
       "title": "Request processing time",
@@ -948,6 +1019,36 @@
                 "id": "color",
                 "value": {
                   "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "500"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "504"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
                   "mode": "fixed"
                 }
               }
@@ -1451,29 +1552,16 @@
   "schemaVersion": 40,
   "tags": [],
   "templating": {
-    "list": [
-      {
-        "current": {
-          "text": "",
-          "value": ""
-        },
-        "name": "query0",
-        "options": [],
-        "query": "",
-        "refresh": 1,
-        "regex": "",
-        "type": "query"
-      }
-    ]
+    "list": []
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Conduit",
   "uid": "be75v3n03qhvkd",
-  "version": 63,
+  "version": 67,
   "weekStart": ""
 }
