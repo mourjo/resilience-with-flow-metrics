@@ -489,7 +489,7 @@
         {
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "max by(application) (http_client_requests_seconds_max{application=\"nls-client\"})",
+          "expr": "sum by(application) (rate(http_client_requests_seconds_sum{application=\"nls-client\", uri!=\"/actuator/prometheus\"}[1m])) / sum by(application) (rate(http_client_requests_seconds_count{application=\"nls-client\", uri!=\"/actuator/prometheus\"}[1m]))",
           "fullMetaSearch": false,
           "hide": false,
           "includeNullMetadata": true,
@@ -1198,8 +1198,8 @@
       "targets": [
         {
           "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "max by(application) (http_client_requests_seconds_max{application=\"ls-client\"})",
+          "editorMode": "code",
+          "expr": "sum by(application) (rate(http_client_requests_seconds_sum{application=\"ls-client\", uri!=\"/actuator/prometheus\"}[1m])) / sum by(application) (rate(http_client_requests_seconds_count{application=\"ls-client\", uri!=\"/actuator/prometheus\"}[1m]))",
           "fullMetaSearch": false,
           "hide": false,
           "includeNullMetadata": true,
@@ -1467,13 +1467,13 @@
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Conduit",
   "uid": "be75v3n03qhvkd",
-  "version": 62,
+  "version": 63,
   "weekStart": ""
 }
