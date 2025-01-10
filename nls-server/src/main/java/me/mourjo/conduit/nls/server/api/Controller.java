@@ -14,15 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class Controller {
 
     private final MeterRegistry meterRegistry;
-    Random r = new Random();
     private final ProcessingTimeProvider processingTimeProvider;
+    Random r = new Random();
+
     public Controller(MeterRegistry meterRegistry) {
         this.meterRegistry = meterRegistry;
         processingTimeProvider = new ProcessingTimeProvider();
     }
 
     @GetMapping("/hello")
-    public Map<String, String> hello(@RequestHeader(value = "X-Client-Request-Timestamp-Millis", defaultValue = "-1") String requestTimestamp) {
+    public Map<String, String> hello(
+        @RequestHeader(value = "X-Client-Request-Timestamp-Millis", defaultValue = "-1") String requestTimestamp) {
         var start = Instant.now();
         long clientRequestTimestamp = Long.parseLong(requestTimestamp);
         if (clientRequestTimestamp > 0) {

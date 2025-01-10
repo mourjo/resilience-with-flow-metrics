@@ -28,8 +28,8 @@ public class Controller {
     private final Executor executor;
 
     private final MeterRegistry meterRegistry;
-    Random r = new Random();
     private final ProcessingTimeProvider processingTimeProvider;
+    Random r = new Random();
 
     public Controller(MeterRegistry meterRegistry) {
         this.meterRegistry = meterRegistry;

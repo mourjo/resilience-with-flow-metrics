@@ -81,7 +81,8 @@ public abstract class ClientRequests {
             inFlightCounter.incrementAndGet();
             String response = restClient.get()
                 .uri("/hello")
-                .header("X-Client-Request-Timestamp-Millis", String.valueOf(Instant.now().toEpochMilli()))
+                .header("X-Client-Request-Timestamp-Millis",
+                    String.valueOf(Instant.now().toEpochMilli()))
                 .retrieve()
                 .body(String.class);
 

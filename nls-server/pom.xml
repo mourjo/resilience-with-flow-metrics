@@ -38,10 +38,10 @@
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>me.mourjo</groupId>
       <artifactId>conduit-commons</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <groupId>me.mourjo</groupId>
       <scope>compile</scope>
+      <version>0.0.1-SNAPSHOT</version>
     </dependency>
 
   </dependencies>
