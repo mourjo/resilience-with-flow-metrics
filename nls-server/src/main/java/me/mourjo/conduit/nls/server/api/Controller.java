@@ -5,7 +5,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Map;
 import java.util.Random;
-import me.mourjo.conduit.commons.server.ProcessingTimeProvider;
+import me.mourjo.conduit.commons.PropertiesFileReader;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class Controller {
 
     private final MeterRegistry meterRegistry;
-    private final ProcessingTimeProvider processingTimeProvider;
+    private final PropertiesFileReader propertiesFileReader;
+
     Random r = new Random();
 
     public Controller(MeterRegistry meterRegistry) {
         this.meterRegistry = meterRegistry;
-        processingTimeProvider = new ProcessingTimeProvider();
+        propertiesFileReader = new PropertiesFileReader();
     }
 
     @GetMapping("/hello")
@@ -36,7 +37,7 @@ public class Controller {
         }
 
         try {
-            int processingTime = processingTimeProvider.readFromFile();
+            int processingTime = propertiesFileReader.getServerProcessingTimeMillis();
             int jitter = r.nextInt(1000);
             Thread.sleep(processingTime + jitter);
             return Map.of("message", "Hello from NLS Server!");
