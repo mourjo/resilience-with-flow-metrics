@@ -5,6 +5,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Map;
 import java.util.Random;
+import me.mourjo.conduit.commons.server.ServerProcessingTime;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,9 +15,10 @@ public class Controller {
 
     private final MeterRegistry meterRegistry;
     Random r = new Random();
-
+    private final ServerProcessingTime processingTimeProvider;
     public Controller(MeterRegistry meterRegistry) {
         this.meterRegistry = meterRegistry;
+        processingTimeProvider = new ServerProcessingTime();
     }
 
     @GetMapping("/hello")
@@ -32,7 +34,9 @@ public class Controller {
         }
 
         try {
-            Thread.sleep(4000 + r.nextInt(1000));
+            int processingTime = processingTimeProvider.readFromFile();
+            int jitter = r.nextInt(1000);
+            Thread.sleep(processingTime + jitter);
             return Map.of("message", "Hello from NLS Server!");
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

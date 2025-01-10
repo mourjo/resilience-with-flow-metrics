@@ -10,6 +10,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import me.mourjo.conduit.commons.server.ServerProcessingTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,7 @@ public class Controller {
 
     private final MeterRegistry meterRegistry;
     Random r = new Random();
+    private final ServerProcessingTime processingTimeProvider;
 
     public Controller(MeterRegistry meterRegistry) {
         this.meterRegistry = meterRegistry;
@@ -38,6 +40,7 @@ public class Controller {
             TimeUnit.MILLISECONDS,
             new LinkedBlockingQueue<>(50)
         );
+        processingTimeProvider = new ServerProcessingTime();
     }
 
     @GetMapping("/hello")
@@ -72,7 +75,9 @@ public class Controller {
                 }
 
                 try {
-                    Thread.sleep(4000 + r.nextInt(1000));
+                    int processingTime = processingTimeProvider.readFromFile();
+                    int jitter = r.nextInt(1000);
+                    Thread.sleep(processingTime + jitter);
                     result.setResult(ResponseEntity.ok(Map.of("message", "Hello from LS Server!")));
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
