@@ -64,7 +64,7 @@ public class Controller {
                 logger.error(
                     "Request(id=%s) did not finish processing in time".formatted(requestId)
                 );
-                result.setResult(ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build());
+                result.setResult(ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).build());
             }
         );
 

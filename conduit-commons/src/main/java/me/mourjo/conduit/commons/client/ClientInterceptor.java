@@ -31,7 +31,7 @@ public class ClientInterceptor implements ClientHttpRequestInterceptor {
             ClientHttpResponse response = execution.execute(request, body);
 
             var status = String.valueOf(response.getStatusCode().value());
-            
+
             meterRegistry.timer("http.client.requests",
                     "uri", uri,
                     "method", method,
