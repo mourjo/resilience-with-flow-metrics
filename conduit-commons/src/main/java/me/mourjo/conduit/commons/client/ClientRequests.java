@@ -1,5 +1,8 @@
 package me.mourjo.conduit.commons.client;
 
+import static me.mourjo.conduit.commons.constants.Headers.CLIENT_REQUEST_KEY_HEADER;
+import static me.mourjo.conduit.commons.constants.Headers.CLIENT_REQUEST_TS_HEADER;
+
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import java.time.Instant;
@@ -22,7 +25,7 @@ public abstract class ClientRequests {
 
     protected final AtomicInteger inFlightCounter;
     protected final AtomicInteger concurrencyGauge;
-
+    protected final AtomicInteger requestIdGenerator;
 
     public ClientRequests(MeterRegistry meterRegistry, String baseUrl) {
         restClient = RestClient.builder()
@@ -35,6 +38,7 @@ public abstract class ClientRequests {
         this.meterRegistry = meterRegistry;
         executorService = Executors.newVirtualThreadPerTaskExecutor();
         concurrencyGauge = new AtomicInteger();
+        requestIdGenerator = new AtomicInteger(1);
 
         Gauge.builder("http.client.requests.concurrency", concurrencyGauge, AtomicInteger::get)
             .register(meterRegistry);
@@ -61,8 +65,8 @@ public abstract class ClientRequests {
             inFlightCounter.incrementAndGet();
             String response = restClient.get()
                 .uri("/hello")
-                .header("X-Client-Request-Timestamp-Millis",
-                    String.valueOf(Instant.now().toEpochMilli()))
+                .header(CLIENT_REQUEST_TS_HEADER, String.valueOf(Instant.now().toEpochMilli()))
+                .header(CLIENT_REQUEST_KEY_HEADER, String.valueOf(requestIdGenerator.incrementAndGet()))
                 .retrieve()
                 .body(String.class);
 

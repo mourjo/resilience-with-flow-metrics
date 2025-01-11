@@ -1,5 +1,8 @@
 package me.mourjo.conduit.nls.server.api;
 
+import static me.mourjo.conduit.commons.constants.Headers.CLIENT_REQUEST_KEY_HEADER;
+import static me.mourjo.conduit.commons.constants.Headers.CLIENT_REQUEST_TS_HEADER;
+
 import io.micrometer.core.instrument.MeterRegistry;
 import java.time.Duration;
 import java.time.Instant;
@@ -25,7 +28,8 @@ public class Controller {
 
     @GetMapping("/hello")
     public Map<String, String> hello(
-        @RequestHeader(value = "X-Client-Request-Timestamp-Millis", defaultValue = "-1") String requestTimestamp) {
+        @RequestHeader(value = CLIENT_REQUEST_TS_HEADER, defaultValue = "-1") String requestTimestamp,
+        @RequestHeader(value = CLIENT_REQUEST_KEY_HEADER, defaultValue = "-1") String requestId) {
         var start = Instant.now();
         long clientRequestTimestamp = Long.parseLong(requestTimestamp);
         if (clientRequestTimestamp > 0) {
@@ -40,7 +44,10 @@ public class Controller {
             int processingTime = propertiesFileReader.getServerProcessingTimeMillis();
             int jitter = r.nextInt(1000);
             Thread.sleep(processingTime + jitter);
-            return Map.of("message", "Hello from NLS Server!");
+            return Map.of(
+                "message", "Hello from NLS Server!",
+                "request_id", requestId
+            );
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } finally {

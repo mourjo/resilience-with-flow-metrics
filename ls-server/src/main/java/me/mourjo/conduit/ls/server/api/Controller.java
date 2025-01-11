@@ -1,5 +1,8 @@
 package me.mourjo.conduit.ls.server.api;
 
+import static me.mourjo.conduit.commons.constants.Headers.CLIENT_REQUEST_KEY_HEADER;
+import static me.mourjo.conduit.commons.constants.Headers.CLIENT_REQUEST_TS_HEADER;
+
 import io.micrometer.core.instrument.MeterRegistry;
 import java.time.Duration;
 import java.time.Instant;
@@ -46,13 +49,23 @@ public class Controller {
 
     @GetMapping("/hello")
     public DeferredResult<ResponseEntity<Map<String, String>>> hello(
-        @RequestHeader(value = "X-Client-Request-Timestamp-Millis", defaultValue = "-1") String requestTimestamp) {
-        return submit(requestTimestamp);
+        @RequestHeader(value = CLIENT_REQUEST_TS_HEADER, defaultValue = "-1") String requestTimestamp,
+        @RequestHeader(value = CLIENT_REQUEST_KEY_HEADER, defaultValue = "-1") String requestId) {
+        return submit(requestTimestamp, requestId);
     }
 
-    private DeferredResult<ResponseEntity<Map<String, String>>> submit(String requestTimestamp) {
+    private DeferredResult<ResponseEntity<Map<String, String>>> submit(String requestTimestamp,
+        String requestId) {
         long enqueueTime = System.currentTimeMillis();
         var result = new DeferredResult<ResponseEntity<Map<String, String>>>(10000L);
+
+        result.onTimeout(
+            () -> {
+                logger.error("Request(id=%s) did not finish processing in time".formatted(requestId));
+                result.setResult(ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build());
+            }
+        );
+
         try {
             executor.execute(() -> {
                 var start = Instant.now();
@@ -70,8 +83,8 @@ public class Controller {
 
                 // already waited too long
                 if (queueTime > 5000) {
-                    logger.error("Dropping this request");
-                    result.setResult(ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).build());
+                    logger.error("Request(id=%s) waited too long, dropping it".formatted(requestId));
+                    result.setResult(ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build());
                     return;
                 }
 
@@ -79,7 +92,11 @@ public class Controller {
                     int processingTime = propertiesFileReader.getServerProcessingTimeMillis();
                     int jitter = r.nextInt(1000);
                     Thread.sleep(processingTime + jitter);
-                    result.setResult(ResponseEntity.ok(Map.of("message", "Hello from LS Server!")));
+                    result.setResult(ResponseEntity.ok(
+                        Map.of(
+                            "message", "Hello from LS Server!",
+                            "request_id", requestId
+                        )));
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 } finally {
@@ -90,7 +107,7 @@ public class Controller {
                 }
             });
         } catch (RejectedExecutionException e) {
-            logger.error("Too many requests", e);
+            logger.error("Request(id=%s) could not be processed due to too many requests".formatted(requestId));
             result.setResult(ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build());
         }
 
