@@ -61,7 +61,9 @@ public class Controller {
 
         result.onTimeout(
             () -> {
-                logger.error("Request(id=%s) did not finish processing in time".formatted(requestId));
+                logger.error(
+                    "Request(id=%s) did not finish processing in time".formatted(requestId)
+                );
                 result.setResult(ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build());
             }
         );
@@ -72,10 +74,11 @@ public class Controller {
                 long clientRequestTimestamp = Long.parseLong(requestTimestamp);
                 if (clientRequestTimestamp > 0) {
                     Instant clientInstant = Instant.ofEpochMilli(clientRequestTimestamp);
-                    meterRegistry.timer("conduit.http.server.processing.delay",
-                            "uri", "/hello",
-                            "method", "get")
-                        .record(Duration.between(clientInstant, Instant.now()));
+                    meterRegistry.timer(
+                        "conduit.http.server.processing.delay",
+                        "uri", "/hello",
+                        "method", "get"
+                    ).record(Duration.between(clientInstant, Instant.now()));
                 }
 
                 long dequeueTime = System.currentTimeMillis();
@@ -83,7 +86,9 @@ public class Controller {
 
                 // already waited too long
                 if (queueTime > 5000) {
-                    logger.error("Request(id=%s) waited too long, dropping it".formatted(requestId));
+                    logger.error(
+                        "Request(id=%s) waited too long, dropping it".formatted(requestId)
+                    );
                     result.setResult(ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build());
                     return;
                 }
@@ -107,7 +112,8 @@ public class Controller {
                 }
             });
         } catch (RejectedExecutionException e) {
-            logger.error("Request(id=%s) could not be processed due to too many requests".formatted(requestId));
+            logger.error("Request(id=%s) could not be processed due to too many requests".formatted(
+                requestId));
             result.setResult(ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build());
         }
 

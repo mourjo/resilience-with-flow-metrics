@@ -66,7 +66,8 @@ public abstract class ClientRequests {
             String response = restClient.get()
                 .uri("/hello")
                 .header(CLIENT_REQUEST_TS_HEADER, String.valueOf(Instant.now().toEpochMilli()))
-                .header(CLIENT_REQUEST_KEY_HEADER, String.valueOf(requestIdGenerator.incrementAndGet()))
+                .header(CLIENT_REQUEST_KEY_HEADER,
+                    String.valueOf(requestIdGenerator.incrementAndGet()))
                 .retrieve()
                 .body(String.class);
 
