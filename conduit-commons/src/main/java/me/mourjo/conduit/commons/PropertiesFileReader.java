@@ -1,16 +1,17 @@
 package me.mourjo.conduit.commons;
 
+import static me.mourjo.conduit.commons.constants.Configuration.CLIENT_CONCURRENCY_CONF_KEY;
+import static me.mourjo.conduit.commons.constants.Configuration.SERVER_PROCESSING_TIME_CONF_KEY;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.ConcurrentHashMap;
 import me.mourjo.conduit.commons.client.GrafanaAnnotationsCreator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import static me.mourjo.conduit.commons.constants.Configuration.*;
 
 public class PropertiesFileReader {
 
@@ -54,8 +55,8 @@ public class PropertiesFileReader {
 
         synchronized (configurations) {
             if (configurations.containsKey(key)) {
-                int previousValue =  configurations.get(key);
-                if (newValue > previousValue){
+                int previousValue = configurations.get(key);
+                if (newValue > previousValue) {
                     grafanaAnnotationsCreator.createAnnotation("%s increased".formatted(key));
                 } else if (newValue < previousValue) {
                     grafanaAnnotationsCreator.createAnnotation("%s decreased".formatted(key));
