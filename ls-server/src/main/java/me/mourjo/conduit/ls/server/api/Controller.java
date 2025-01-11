@@ -105,10 +105,11 @@ public class Controller {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 } finally {
-                    meterRegistry.timer("conduit.http.server.processing.time",
+                    meterRegistry.timer(
+                        "conduit.http.server.processing.time",
                             "uri", "/hello",
-                            "method", "get")
-                        .record(Duration.between(start, Instant.now()));
+                            "method", "get"
+                        ).record(Duration.between(start, Instant.now()));
                 }
             });
         } catch (RejectedExecutionException e) {
