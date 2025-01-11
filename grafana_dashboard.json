@@ -8,9 +8,15 @@
           "uid": "-- Grafana --"
         },
         "enable": true,
-        "hide": true,
-        "iconColor": "rgba(0, 211, 255, 1)",
+        "hide": false,
+        "iconColor": "blue",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
@@ -31,7 +37,7 @@
       },
       "id": 21,
       "panels": [],
-      "title": "Current Status",
+      "title": "Snapshot",
       "type": "row"
     },
     {
@@ -364,6 +370,98 @@
       "type": "piechart"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "ce75u9s79ks1sa"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "503"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "504"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 8,
+        "y": 1
+      },
+      "id": 25,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "http_client_requests_initiated_total",
+          "legendFormat": "{{application}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Total number of requests",
+      "type": "stat"
+    },
+    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
@@ -540,16 +638,28 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
-            "fillOpacity": 80,
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "bars",
+            "fillOpacity": 71,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
             "lineWidth": 1,
+            "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
             },
             "thresholdsStyle": {
               "mode": "off"
@@ -626,10 +736,6 @@
       },
       "id": 5,
       "options": {
-        "barRadius": 0,
-        "barWidth": 0.97,
-        "fullHighlight": false,
-        "groupWidth": 0.7,
         "legend": {
           "calcs": [
             "last"
@@ -638,15 +744,10 @@
           "placement": "bottom",
           "showLegend": true
         },
-        "orientation": "auto",
-        "showValue": "auto",
-        "stacking": "normal",
         "tooltip": {
-          "mode": "multi",
+          "mode": "single",
           "sort": "none"
-        },
-        "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 100
+        }
       },
       "pluginVersion": "11.4.0",
       "targets": [
@@ -663,7 +764,7 @@
         }
       ],
       "title": "Response Status Counts",
-      "type": "barchart"
+      "type": "timeseries"
     },
     {
       "datasource": {
@@ -964,7 +1065,7 @@
         {
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "http_client_requests_initiated_total{application=\"nls-client\"}",
+          "expr": "sum_over_time(http_client_requests_initiated_total{application=\"nls-client\"}[1m])",
           "fullMetaSearch": false,
           "hide": true,
           "includeNullMetadata": true,
@@ -980,7 +1081,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "http_client_requests_completed_total{application=\"nls-client\"}",
+          "expr": "sum_over_time(http_client_requests_completed_total{application=\"nls-client\"}[1m])",
           "fullMetaSearch": false,
           "hide": true,
           "includeNullMetadata": true,
@@ -1003,6 +1104,19 @@
         }
       ],
       "title": "Client-observed in-flight requests",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "In flight",
+            "mode": "reduceRow",
+            "reduce": {
+              "reducer": "max"
+            },
+            "replaceFields": true
+          }
+        }
+      ],
       "type": "timeseries"
     },
     {
@@ -1292,16 +1406,28 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
-            "fillOpacity": 80,
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "bars",
+            "fillOpacity": 71,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
             "lineWidth": 1,
+            "pointSize": 6,
             "scaleDistribution": {
               "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
             },
             "thresholdsStyle": {
               "mode": "off"
@@ -1408,10 +1534,6 @@
       },
       "id": 13,
       "options": {
-        "barRadius": 0,
-        "barWidth": 0.97,
-        "fullHighlight": false,
-        "groupWidth": 0.7,
         "legend": {
           "calcs": [
             "last"
@@ -1420,15 +1542,10 @@
           "placement": "bottom",
           "showLegend": true
         },
-        "orientation": "auto",
-        "showValue": "auto",
-        "stacking": "normal",
         "tooltip": {
-          "mode": "multi",
+          "mode": "single",
           "sort": "none"
-        },
-        "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 100
+        }
       },
       "pluginVersion": "11.4.0",
       "targets": [
@@ -1445,7 +1562,7 @@
         }
       ],
       "title": "Response Status Counts",
-      "type": "barchart"
+      "type": "timeseries"
     },
     {
       "datasource": {
@@ -1746,11 +1863,11 @@
         {
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "http_client_requests_initiated_total{application=\"ls-client\"}",
+          "expr": "sum_over_time(http_client_requests_initiated_total{application=\"ls-client\"}[1m])",
           "fullMetaSearch": false,
           "hide": true,
           "includeNullMetadata": true,
-          "legendFormat": "__auto",
+          "legendFormat": "total_intitiated",
           "range": true,
           "refId": "A",
           "useBackend": false
@@ -1762,12 +1879,12 @@
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "http_client_requests_completed_total{application=\"ls-client\"}",
+          "expr": "sum_over_time(http_client_requests_completed_total{application=\"ls-client\"}[1m])",
           "fullMetaSearch": false,
           "hide": true,
           "includeNullMetadata": true,
           "instant": false,
-          "legendFormat": "__auto",
+          "legendFormat": "total_completed",
           "range": true,
           "refId": "B",
           "useBackend": false
@@ -1785,6 +1902,22 @@
         }
       ],
       "title": "Client-observed in-flight requests",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "In flight",
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [
+                "In-flight {application=\"ls-client\", instance=\"host.docker.internal:7071\", job=\"conduit-ls-client-scraper\", method=\"GET\", uri=\"http://localhost:7070/hello\"}"
+              ],
+              "reducer": "max"
+            },
+            "replaceFields": true
+          }
+        }
+      ],
       "type": "timeseries"
     },
     {
@@ -1901,13 +2034,13 @@
     "list": []
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Conduit",
   "uid": "be75v3n03qhvkd",
-  "version": 78,
+  "version": 86,
   "weekStart": ""
 }
