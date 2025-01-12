@@ -107,9 +107,9 @@ public class Controller {
                 } finally {
                     meterRegistry.timer(
                         "conduit.http.server.processing.time",
-                            "uri", "/hello",
-                            "method", "get"
-                        ).record(Duration.between(start, Instant.now()));
+                        "uri", "/hello",
+                        "method", "get"
+                    ).record(Duration.between(start, Instant.now()));
                 }
             });
         } catch (RejectedExecutionException e) {

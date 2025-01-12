@@ -15,12 +15,12 @@ import org.slf4j.LoggerFactory;
 
 public class PropertiesFileReader {
 
+    private static final Map<String, Integer> configurations = new HashMap<>();
     private static String FILE_PATH = "../conduit_config.properties";
     private final int DEFAULT_CONCURRENCY = 1;
     private final int DEFAULT_SERVER_PROCESSING_TIME_SEC = 4;
     private final Logger logger = LoggerFactory.getLogger(PropertiesFileReader.class);
     private final GrafanaAnnotationsCreator grafanaAnnotationsCreator;
-    private static final Map<String, Integer> configurations = new HashMap<>();
 
     public PropertiesFileReader() {
         grafanaAnnotationsCreator = new GrafanaAnnotationsCreator();
