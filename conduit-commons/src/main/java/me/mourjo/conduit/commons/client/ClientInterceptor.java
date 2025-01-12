@@ -23,32 +23,33 @@ public class ClientInterceptor implements ClientHttpRequestInterceptor {
         String uri = request.getURI().toString();
         String method = request.getMethod().name();
         Instant start = Instant.now();
+        String status = "error";
 
         try {
-            meterRegistry.counter("http.client.requests.initiated", "uri", uri,
-                "method", method).increment(1d);
+            meterRegistry.counter(
+                "http.client.requests.initiated",
+                "uri", uri,
+                "method", method
+            ).increment(1d);
 
             ClientHttpResponse response = execution.execute(request, body);
 
-            var status = String.valueOf(response.getStatusCode().value());
+            status = String.valueOf(response.getStatusCode().value());
 
+            return response;
+        } finally {
             meterRegistry.timer("http.client.requests",
                     "uri", uri,
                     "method", method,
                     "status", status)
                 .record(Duration.between(start, Instant.now()));
 
-            return response;
-        } catch (IOException e) {
-            meterRegistry.timer("http.client.requests",
-                    "uri", uri,
-                    "method", method,
-                    "status", "error")
-                .record(Duration.between(start, Instant.now()));
-            throw e;
-        } finally {
-            meterRegistry.counter("http.client.requests.completed", "uri", uri,
-                "method", method).increment(1d);
+            meterRegistry.counter(
+                "http.client.requests.completed",
+                "uri", uri,
+                "method", method,
+                "status", status
+            ).increment(1d);
         }
     }
 }
