@@ -7,13 +7,16 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class GrafanaAnnotationsCreator {
 
     protected static final Logger logger = LoggerFactory.getLogger(GrafanaAnnotationsCreator.class);
-    private final String API_KEY = "glsa_lsDQm65IzGRvkC48C8J0nHhswVW4WQK5_e19b6f33";
+    private final String GRAFANA_USERNAME = "admin";
+    private final String GRAFANA_PASSWORD = "admin123";
     private final String GRAFANA_ENDPOINT = "http://localhost:3000/api/annotations";
     private final int DASHBOARD_ID = 1;
     HttpClient client = HttpClient.newHttpClient();
@@ -51,13 +54,17 @@ public class GrafanaAnnotationsCreator {
             text
         );
 
-        HttpRequest request = HttpRequest.newBuilder()
+        String auth = "%s:%s".formatted(GRAFANA_USERNAME, GRAFANA_PASSWORD);
+        String authToken = Base64.getEncoder()
+            .encodeToString(auth.getBytes(StandardCharsets.UTF_8));
+        String authHeader = "Basic %s".formatted(authToken);
+
+        return HttpRequest.newBuilder()
             .uri(URI.create(GRAFANA_ENDPOINT))
-            .header(AUTHORIZATION, "Bearer " + API_KEY)
+            .header(AUTHORIZATION, authHeader)
             .header(CONTENT_TYPE, "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(payload))
             .build();
-        return request;
     }
 
 }
