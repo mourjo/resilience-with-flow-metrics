@@ -20,11 +20,10 @@ public class PropertiesFileReader {
     private final int DEFAULT_SERVER_PROCESSING_TIME_SEC = 4;
     private final Logger logger = LoggerFactory.getLogger(PropertiesFileReader.class);
     private final GrafanaAnnotationsCreator grafanaAnnotationsCreator;
-    private final Map<String, Integer> configurations;
+    private static final Map<String, Integer> configurations = new HashMap<>();
 
     public PropertiesFileReader() {
         grafanaAnnotationsCreator = new GrafanaAnnotationsCreator();
-        configurations = new HashMap<>();
     }
 
     public Properties readFile() throws IOException {

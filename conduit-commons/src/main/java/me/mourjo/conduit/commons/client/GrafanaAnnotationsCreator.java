@@ -24,7 +24,8 @@ public class GrafanaAnnotationsCreator {
 
     public void createAnnotation(String text) {
         try {
-            var request = buildHttpRequest(text, System.currentTimeMillis());
+            long nextTenthSecond = (1 + (System.currentTimeMillis() / 10000)) * 10000;
+            var request = buildHttpRequest(text, nextTenthSecond);
             var response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() != 200 && response.statusCode() != 201) {
