@@ -47,8 +47,6 @@ public abstract class ClientRequests {
 
     protected final void requestBatch() {
         int requestCount = concurrency();
-        logger.info("Firing %d requests (already in flight %d)".formatted(requestCount,
-            inFlightCounter.get()));
         for (int i = 0; i < requestCount; i++) {
             executorService.submit(this::fireRequest);
         }

@@ -3,9 +3,11 @@ package me.mourjo.conduit.ls.server.api;
 import static me.mourjo.conduit.commons.constants.Headers.CLIENT_REQUEST_KEY_HEADER;
 import static me.mourjo.conduit.commons.constants.Headers.CLIENT_REQUEST_TS_HEADER;
 
+import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.Executor;
@@ -38,12 +40,18 @@ public class Controller {
         this.meterRegistry = meterRegistry;
         propertiesFileReader = new PropertiesFileReader();
 
+        var queue =  new LinkedBlockingQueue<Runnable>(30);
+
+        Gauge.builder("http.server.queue.size", queue, Collection::size)
+            .register(meterRegistry);
+
+
         executor = new ThreadPoolExecutor(
             5,
             5,
             0L,
             TimeUnit.MILLISECONDS,
-            new LinkedBlockingQueue<>(50)
+            queue
         );
     }
 
