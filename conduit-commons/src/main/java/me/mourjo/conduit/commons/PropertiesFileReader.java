@@ -56,9 +56,9 @@ public class PropertiesFileReader {
             if (configurations.containsKey(key)) {
                 int previousValue = configurations.get(key);
                 if (newValue > previousValue) {
-                    grafanaAnnotationsCreator.createAnnotation("%s increased".formatted(key));
+                    grafanaAnnotationsCreator.createAnnotation("%s increased to %d".formatted(key, newValue));
                 } else if (newValue < previousValue) {
-                    grafanaAnnotationsCreator.createAnnotation("%s decreased".formatted(key));
+                    grafanaAnnotationsCreator.createAnnotation("%s decreased to %d".formatted(key, newValue));
                 }
             }
             configurations.put(key, newValue);
