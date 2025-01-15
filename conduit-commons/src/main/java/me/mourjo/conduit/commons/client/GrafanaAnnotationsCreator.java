@@ -9,6 +9,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,29 +19,30 @@ public class GrafanaAnnotationsCreator {
     private final String GRAFANA_USERNAME = "admin";
     private final String GRAFANA_PASSWORD = "admin123";
     private final String GRAFANA_ENDPOINT = "http://localhost:3000/api/annotations";
-    private final int DASHBOARD_ID = 1;
+    private final List<Integer> DASHBOARD_IDS = List.of(1,5);
     HttpClient client = HttpClient.newHttpClient();
 
-    public static void main(String[] args) {
-        new GrafanaAnnotationsCreator().createAnnotation("test");
-    }
-
     public void createAnnotation(String text) {
-        try {
-            long nextTenthSecond = (1 + (System.currentTimeMillis() / 10000)) * 10000;
-            var request = buildHttpRequest(text, nextTenthSecond);
-            var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        long window = 30000;
+        long roundedTs = (1 + (System.currentTimeMillis() / window)) * window;
+        for (int dashboardId : DASHBOARD_IDS) {
+            try {
+                var request = buildHttpRequest(dashboardId, text, roundedTs);
+                var response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            if (response.statusCode() != 200 && response.statusCode() != 201) {
-                logger.error("Error in creating annotation, response code: %s, body: %s".formatted(
-                    response.statusCode(), response.body()));
+                if (response.statusCode() != 200 && response.statusCode() != 201) {
+                    logger.error(
+                        "Error in creating annotation, response code: %s, body: %s".formatted(
+                            response.statusCode(), response.body())
+                    );
+                }
+            } catch (Exception e) {
+                logger.error("Error in creating annotation in dashboard {}", dashboardId, e);
             }
-        } catch (Exception e) {
-            logger.error("Error in creating annotation", e);
         }
     }
 
-    private HttpRequest buildHttpRequest(String text, long timestamp) {
+    private HttpRequest buildHttpRequest(int dashboardId, String text, long timestamp) {
         String payload = String.format(
             """
                 {
@@ -49,7 +51,7 @@ public class GrafanaAnnotationsCreator {
                     "text": "%s"
                 }
                 """,
-            DASHBOARD_ID,
+            dashboardId,
             timestamp,
             text
         );
