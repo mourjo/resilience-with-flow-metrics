@@ -42,6 +42,16 @@
         <groupId>org.springframework.boot</groupId>
         <version>3.4.1</version>
       </dependency>
+      <dependency>
+        <artifactId>aspectjrt</artifactId>
+        <groupId>org.aspectj</groupId>
+        <version>1.9.22.1</version>
+      </dependency>
+      <dependency>
+        <artifactId>aspectjweaver</artifactId>
+        <groupId>org.aspectj</groupId>
+        <version>1.9.22.1</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
   <description>Flow metrics in production</description>

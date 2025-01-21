@@ -43,7 +43,14 @@
       <scope>compile</scope>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
-
+    <dependency>
+      <artifactId>aspectjrt</artifactId>
+      <groupId>org.aspectj</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>aspectjweaver</artifactId>
+      <groupId>org.aspectj</groupId>
+    </dependency>
   </dependencies>
 
   <modelVersion>4.0.0</modelVersion>

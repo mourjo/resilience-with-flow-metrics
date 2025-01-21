@@ -19,7 +19,7 @@ public class GrafanaAnnotationsCreator {
     private final String GRAFANA_USERNAME = "admin";
     private final String GRAFANA_PASSWORD = "admin123";
     private final String GRAFANA_ENDPOINT = "http://localhost:3000/api/annotations";
-    private final List<Integer> DASHBOARD_IDS = List.of(1,5);
+    private final List<Integer> DASHBOARD_IDS = List.of(1, 5);
     HttpClient client = HttpClient.newHttpClient();
 
     public void createAnnotation(String text) {

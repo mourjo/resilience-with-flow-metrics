@@ -40,11 +40,10 @@ public class Controller {
         this.meterRegistry = meterRegistry;
         propertiesFileReader = new PropertiesFileReader();
 
-        var queue =  new LinkedBlockingQueue<Runnable>(30);
+        var queue = new LinkedBlockingQueue<Runnable>(30);
 
         Gauge.builder("http.server.queue.size", queue, Collection::size)
             .register(meterRegistry);
-
 
         executor = new ThreadPoolExecutor(
             5,

@@ -3,6 +3,7 @@ package me.mourjo.conduit.nls.server.api;
 import static me.mourjo.conduit.commons.constants.Headers.CLIENT_REQUEST_KEY_HEADER;
 import static me.mourjo.conduit.commons.constants.Headers.CLIENT_REQUEST_TS_HEADER;
 
+import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.MeterRegistry;
 import java.time.Duration;
 import java.time.Instant;
@@ -26,11 +27,12 @@ public class Controller {
         propertiesFileReader = new PropertiesFileReader();
     }
 
+    @Timed(value = "conduit.http.server.processing.time", extraTags = {"uri", "/hello", "method",
+        "get"})
     @GetMapping("/hello")
     public Map<String, String> hello(
         @RequestHeader(value = CLIENT_REQUEST_TS_HEADER, defaultValue = "-1") String requestTimestamp,
         @RequestHeader(value = CLIENT_REQUEST_KEY_HEADER, defaultValue = "-1") String requestId) {
-        var start = Instant.now();
         long clientRequestTimestamp = Long.parseLong(requestTimestamp);
         if (clientRequestTimestamp > 0) {
             Instant clientInstant = Instant.ofEpochMilli(clientRequestTimestamp);
@@ -50,13 +52,6 @@ public class Controller {
             );
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
-        } finally {
-
-            meterRegistry.timer("conduit.http.server.processing.time",
-                    "uri", "/hello",
-                    "method", "get")
-                .record(Duration.between(start, Instant.now()));
-
         }
     }
 }
