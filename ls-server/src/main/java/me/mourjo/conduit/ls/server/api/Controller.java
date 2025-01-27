@@ -63,6 +63,12 @@ public class Controller {
         return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).build();
     }
 
+    private static void timeoutHandler(String requestId,
+        DeferredResult<ResponseEntity<Map<String, String>>> result) {
+        logger.error("Request(id={}) did not finish processing in time", requestId);
+        result.setResult(gatewayTimeout());
+    }
+
     @GetMapping("/hello")
     public DeferredResult<ResponseEntity<Map<String, String>>> hello(
         @RequestHeader(value = CLIENT_REQUEST_TS_HEADER, defaultValue = "-1") String requestTimestamp,
@@ -93,17 +99,12 @@ public class Controller {
                 result.setResult(ResponseEntity.ok(response));
             });
         } catch (RejectedExecutionException e) {
-            logger.error("Request(id={}) could not be processed due to too many requests", requestId);
+            logger.error("Request(id={}) could not be processed due to too many requests",
+                requestId);
             result.setResult(tooManyRequests());
         }
 
         return result;
-    }
-
-    private static void timeoutHandler(String requestId,
-        DeferredResult<ResponseEntity<Map<String, String>>> result) {
-        logger.error("Request(id={}) did not finish processing in time", requestId);
-        result.setResult(gatewayTimeout());
     }
 
     @SneakyThrows
