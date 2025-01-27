@@ -52,6 +52,11 @@
         <groupId>org.aspectj</groupId>
         <version>1.9.22.1</version>
       </dependency>
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>1.18.34</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
   <description>Flow metrics in production</description>

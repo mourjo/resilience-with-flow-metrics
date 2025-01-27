@@ -37,19 +37,20 @@
       <groupId>me.mourjo</groupId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
-    <dependency>
-      <artifactId>conduit-commons</artifactId>
-      <groupId>me.mourjo</groupId>
-      <scope>compile</scope>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
+
     <dependency>
       <artifactId>aspectjrt</artifactId>
       <groupId>org.aspectj</groupId>
     </dependency>
+
     <dependency>
       <artifactId>aspectjweaver</artifactId>
       <groupId>org.aspectj</groupId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
     </dependency>
   </dependencies>
 
