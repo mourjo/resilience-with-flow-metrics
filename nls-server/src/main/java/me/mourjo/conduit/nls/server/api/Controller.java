@@ -9,6 +9,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Map;
 import java.util.Random;
+import lombok.SneakyThrows;
 import me.mourjo.conduit.commons.PropertiesFileReader;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -33,25 +34,28 @@ public class Controller {
     public Map<String, String> hello(
         @RequestHeader(value = CLIENT_REQUEST_TS_HEADER, defaultValue = "-1") String requestTimestamp,
         @RequestHeader(value = CLIENT_REQUEST_KEY_HEADER, defaultValue = "-1") String requestId) {
+
+        return doSomeComputation(requestId, requestTimestamp);
+    }
+
+    @SneakyThrows
+    private Map<String, String> doSomeComputation(String requestId, String requestTimestamp) {
         long clientRequestTimestamp = Long.parseLong(requestTimestamp);
         if (clientRequestTimestamp > 0) {
             Instant clientInstant = Instant.ofEpochMilli(clientRequestTimestamp);
-            meterRegistry.timer("conduit.http.server.processing.delay",
-                    "uri", "/hello",
-                    "method", "get")
-                .record(Duration.between(clientInstant, Instant.now()));
+            meterRegistry.timer(
+                "conduit.http.server.processing.delay",
+                "uri", "/hello",
+                "method", "get"
+            ).record(Duration.between(clientInstant, Instant.now()));
         }
 
-        try {
-            int processingTime = propertiesFileReader.getServerProcessingTimeMillis();
-            int jitter = r.nextInt(1000);
-            Thread.sleep(processingTime + jitter);
-            return Map.of(
-                "message", "Hello from NLS Server!",
-                "request_id", requestId
-            );
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        int processingTime = propertiesFileReader.getServerProcessingTimeMillis();
+        int jitter = r.nextInt(1000);
+        Thread.sleep(processingTime + jitter);
+        return Map.of(
+            "message", "Hello from NLS Server!",
+            "request_id", requestId
+        );
     }
 }
