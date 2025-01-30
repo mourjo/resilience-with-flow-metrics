@@ -20,6 +20,22 @@ mvn spring-boot:run
 - Default user/password `admin`, updated to `admin` and `admin123`
 - Use `Prometheus server URL` as `host.docker.internal:9090`
 
+
+### Simulating load
+Experiment 1: Traffic spike
+- server-processing-time-sec=3
+- client-concurrency=20
+
+Experiment 2: Degraded dependency
+- server-processing-time-sec=6
+- client-concurrency=10
+
+## Result 1: Traffic Spike
+![](result-client-concurrency-2025-01-29-10_04_23.png)
+
+## Result 2: Degraded Dependency
+![](result-degraded-dependency-2025-01-29-08_39_22.png)
+
 ## Notes
 
 I generated the modules using
