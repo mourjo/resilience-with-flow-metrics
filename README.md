@@ -32,7 +32,8 @@ client-concurrency=10
 ## Starting the system
 
 ```bash
-mvn spring-boot:run
+docker compose up
+./start_all.sh
 ```
 
 ## Monitoring
