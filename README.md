@@ -16,7 +16,7 @@ Flow metrics are a set of measurements that help organizations understand and im
 In this project we focus on the first two flow metrics (WIP and age) to improve resilience in services.
 
 ## Components in this System
-There are two servers and two clients in this project![async handler 4.png](../../Desktop/monster%20scale/excalidraw/async%20handler%204.png).
+There are two servers and two clients in this project
 
 1. **NLS Server** - this is a server that has one HTTP endpoint `/hello` and uses a basic default implementation of a Spring Boot server. 
 2. **NLS Client** - this is a Java client that calls the `/hello` endpoint on the NLS server.
@@ -37,11 +37,11 @@ The LS Server detects congestion by the following flow metrics in real time:
 Whenever the server sees too many WIPs or requests getting older before completion, it drops the requests and responds to clients with appropriate a status like `429`. This is done in Spring Boot by [asynchronous request processing](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-ann-async.html#mvc-ann-async-deferredresult).   
 
 ### NLS Server allows congestion to build up
-![default_handler.png](default_handler.png)
+![default_handler.png](images/default_handler.png)
 
 
 ### LS Server detects and reacts to congestion
-![async_handler.png](async_handler.png)
+![async_handler.png](images/async_handler.png)
 
 ## Key Takeaways
 
@@ -53,12 +53,12 @@ Whenever the server sees too many WIPs or requests getting older before completi
 ## Result 1: Traffic Spike
 
 [_Demo video here._](https://youtu.be/Z2Xg-8HIXi8)
-![](result-client-concurrency-2025-01-29-10_04_23.png)
+![](images/result-client-concurrency-2025-01-29-10_04_23.png)
 
 ## Result 2: Degraded Dependency
 
 [_Demo video here_](https://youtu.be/cV7xROqyZ14)
-![](result-degraded-dependency-2025-01-29-08_39_22.png)
+![](images/result-degraded-dependency-2025-01-29-08_39_22.png)
 
 ## Experiment Parameters
 To run the above experiments and see the results, use the following configurations.
