@@ -18,7 +18,7 @@ In this project we focus on the first two flow metrics (WIP and age) to improve 
 ## Components in this System
 There are two servers and two clients in this project
 
-1. **NLS Server** - this is a server that has one HTTP endpoint `/hello` and uses a basic default implementation of a Spring Boot server. 
+1. **NLS Server** - this is a server that has one HTTP endpoint `/hello` and uses a basic default implementation of a default Spring Boot server. 
 2. **NLS Client** - this is a Java client that calls the `/hello` endpoint on the NLS server.
 3. **LS Server** - this is a server with the same functionality as the other server, but it drops requests when it detects congestion in the system. 
 4. **LS Client** - this is a Java client that calls the `/hello` endpoint on the LS server.
@@ -49,6 +49,9 @@ Whenever the server sees too many WIPs or requests getting older before completi
 2. NLS server always returns 200 falsely communicating that everything is okay. LS server detects congestion and **gracefully degrades** by rejecting work it cannot do with 429 status
 3. NLS server takes a much **longer time to recover** while LS server recovers almost immediately.
 
+## Implementation Details
+- [NLS Controller](https://github.com/mourjo/monster-scale-2025/blob/main/nls-server/src/main/java/me/mourjo/conduit/nls/server/api/Controller.java#L34) - a controller with a simple endpoint that sleeps for some time and responds with a hello-world message
+- [LS Controller](https://github.com/mourjo/monster-scale-2025/blob/main/ls-server/src/main/java/me/mourjo/conduit/ls/server/api/Controller.java#L72) - same in functionality as the NLS controller but degrades itself upon congestion
 
 ## Result 1: Traffic Spike
 
