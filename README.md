@@ -49,19 +49,65 @@ Whenever the server sees too many WIPs or requests getting older before completi
 2. NLS server always returns 200 falsely communicating that everything is okay. LS server detects congestion and **gracefully degrades** by rejecting work it cannot do with 429 status
 3. NLS server takes a much **longer time to recover** while LS server recovers almost immediately.
 
+## Why limit WIP and Age?
+
+We get the following benefits when the system is congested:
+
+- **Bounded wait-time** for clients - clients will get a response within the age limit
+- **Effective communication** when there is congestion - statuses like 429 signal to the client that the server is degraded
+- **Faster recovery** after incident - because there is little space for requests to get queued, congestion clearance will be faster after the incident is mitigated 
+
+WIP and age are independent of system characteristics like:
+- Machines in a Cluster
+- Memory and Garbage Collection
+- Distribution of type of requests
+- Number of downstream dependencies
+- CPU Utilization
+- ...
+
+Making it widely applicable for whenever there is a disruption in the flow of requests:
+- Sudden burst of traffic
+- Slow dependency
+- Latency bugs
+- ...
+
+
 ## Implementation Details
 - [NLS Controller](https://github.com/mourjo/monster-scale-2025/blob/main/nls-server/src/main/java/me/mourjo/conduit/nls/server/api/Controller.java#L34) - a controller with a simple endpoint that sleeps for some time and responds with a hello-world message
 - [LS Controller](https://github.com/mourjo/monster-scale-2025/blob/main/ls-server/src/main/java/me/mourjo/conduit/ls/server/api/Controller.java#L72) - same in functionality as the NLS controller but degrades itself upon congestion
 
 ## Result 1: Traffic Spike
+In the first scenario, there is a spike in the number of requests made to the servers.
+The blue dotted lines indicate when the traffic spiked. The second server applies
+WIP and age limit and protects itself from this spike but the first server (a default Spring 
+Boot server) gets congested and unresponsive. 
 
-[_Demo video here._](https://youtu.be/Z2Xg-8HIXi8)
-![](images/result-client-concurrency-2025-01-29-10_04_23.png)
+![](images/result_10.png)
+![](images/result_11.png)
+![](images/result_12.png)
+![](images/result_13.png)
+
+More details:
+- [_Full result here._](images/result-client-concurrency-2025-01-29-10_04_23.png)
+- [_Demo video here._](https://youtu.be/Z2Xg-8HIXi8)
+
+
 
 ## Result 2: Degraded Dependency
+In the second scenario, the number of requests is constant but the time to process a request increases -- simulating
+a degraded dependency.
+The blue dotted lines indicate when the dependency degrades and recovers. The second server applies
+WIP and age limit and protects itself from this degraded dependency but the first server (a default Spring
+Boot server) gets congested and unresponsive.
 
-[_Demo video here_](https://youtu.be/cV7xROqyZ14)
-![](images/result-degraded-dependency-2025-01-29-08_39_22.png)
+![](images/result_20.png)
+![](images/result_21.png)
+![](images/result_22.png)
+![](images/result_23.png)
+
+More details:
+- [_Demo video here._](https://youtu.be/cV7xROqyZ14)
+- [_Full result here._](images/result-degraded-dependency-2025-01-29-08_39_22.png)
 
 ## Experiment Parameters
 To run the above experiments and see the results, use the following configurations.
