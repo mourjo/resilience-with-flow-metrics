@@ -29,3 +29,15 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn -B package --file pom.xml
+      - name: Run all servers
+        run: "./start_all.sh &"
+      - name: Wait for LS Server
+        uses: ifaxity/wait-on-action@v1.2.1
+        with:
+          resource: http://localhost:7070/hello
+          timeout: 30000
+      - name: Wait for NLS Server
+        uses: ifaxity/wait-on-action@v1.2.1
+        with:
+          resource: http://localhost:8080/hello
+          timeout: 30000
