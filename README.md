@@ -142,8 +142,19 @@ are ingested through prometheus.
 - Prometheus runs on [localhost:9090](http://localhost:9090/query?g0.expr=http_server_requests_active_seconds_max&g0.show_tree=0&g0.tab=graph&g0.range_input=1h&g0.res_type=auto&g0.res_density=medium&g0.display_mode=lines&g0.show_exemplars=0)
   - The file `prometheus.yml` defines the configuration for simulating the experiments. 
 - Grafana runs on [localhost:3000](http://localhost:3000/)
-  - Using `Prometheus server URL` as `host.docker.internal:9090`
-  - Default user/password `admin`, updated to `admin` and `admin123`
+  - Using `Prometheus server URL` as `http://host.docker.internal:9090`
+  - Default user/password `admin`, updated to `admin` and `admin123` (this password is used in the code for basic auth)
+
+## Importing the Grafana dashboard
+
+The Grafana metrics shown above that can be imported as a dashboard after starting Grafana with Docker. 
+
+1. Before importing the dashboards, add Prometheus as a datasource in the Grafana UI manually. Use the endpoint `http://host.docker.internal:9090`.
+2. Import the dashboard from the Grafana UI using the file `grafana_dashboard_flow_metrics.json`
+3. This will ask for a data source - use the data source created in step 1.
+
+Note: While metrics emitted by the servers and client work out of the box, annotations (the blue 
+lines in the screenshots) take a while to start showing in the UI.
 
 
 ## Notes
