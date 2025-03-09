@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Define paths to each Maven project
-APP1_DIR="/Users/mourjo/repos/monster-scale-2025/ls-server"
-APP2_DIR="/Users/mourjo/repos/monster-scale-2025/nls-server"
-APP3_DIR="/Users/mourjo/repos/monster-scale-2025/nls-client"
-APP4_DIR="/Users/mourjo/repos/monster-scale-2025/ls-client"
+APP1_DIR="$(pwd)/ls-server"
+APP2_DIR="$(pwd)/nls-server"
+APP3_DIR="$(pwd)/nls-client"
+APP4_DIR="$(pwd)/ls-client"
 
 mvn clean install -DskipTests
 
