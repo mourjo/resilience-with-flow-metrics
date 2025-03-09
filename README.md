@@ -110,7 +110,7 @@ More details:
 - [_Full result here._](images/result-degraded-dependency-2025-01-29-08_39_22.png)
 
 ## Experiment Parameters
-To run the above experiments and see the results, use the following configurations.
+To run the above experiments and see the results, update the configurations in this file: `conduit_config.properties`
 
 ### Experiment 1: Traffic spike
 
