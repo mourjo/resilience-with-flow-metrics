@@ -11,6 +11,20 @@
           <groupId>org.springframework.boot</groupId>
           <version>3.4.1</version>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.14.0</version>
+          <configuration>
+            <annotationProcessorPaths>
+              <path>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.34</version>
+              </path>
+            </annotationProcessorPaths>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
