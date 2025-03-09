@@ -36,8 +36,18 @@ jobs:
         with:
           resource: http://localhost:7070/hello
           timeout: 30000
+      - name: Wait for LS Client
+        uses: ifaxity/wait-on-action@v1.2.1
+        with:
+          resource: http://localhost:7071/actuator/prometheus
+          timeout: 30000
       - name: Wait for NLS Server
         uses: ifaxity/wait-on-action@v1.2.1
         with:
           resource: http://localhost:8080/hello
+          timeout: 30000
+      - name: Wait for NLS Client
+        uses: ifaxity/wait-on-action@v1.2.1
+        with:
+          resource: http://localhost:8081/actuator/prometheus
           timeout: 30000
