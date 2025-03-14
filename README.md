@@ -1,4 +1,4 @@
-# monster-scale-2025
+# Conduit: Resilience with Flow Metrics
 
 This project is a demo for using flow metrics to build resilient systems.
 
@@ -73,8 +73,8 @@ Making it widely applicable for whenever there is a disruption in the flow of re
 
 
 ## Implementation Details
-- [NLS Controller](https://github.com/mourjo/monster-scale-2025/blob/main/nls-server/src/main/java/me/mourjo/conduit/nls/server/api/Controller.java#L34) - a controller with a simple endpoint that sleeps for some time and responds with a hello-world message
-- [LS Controller](https://github.com/mourjo/monster-scale-2025/blob/main/ls-server/src/main/java/me/mourjo/conduit/ls/server/api/Controller.java#L72) - same in functionality as the NLS controller but degrades itself upon congestion
+- [NLS Controller](https://github.com/mourjo/resilience-with-flow-metrics/blob/main/nls-server/src/main/java/me/mourjo/conduit/nls/server/api/Controller.java#L34) - a controller with a simple endpoint that sleeps for some time and responds with a hello-world message
+- [LS Controller](https://github.com/mourjo/resilience-with-flow-metrics/blob/main/ls-server/src/main/java/me/mourjo/conduit/ls/server/api/Controller.java#L72) - same in functionality as the NLS controller but degrades itself upon congestion
 
 ## Result 1: Traffic Spike
 In the first scenario, there is a spike in the number of requests made to the servers.
