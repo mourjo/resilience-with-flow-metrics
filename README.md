@@ -151,7 +151,8 @@ are ingested through prometheus.
 
 The Grafana metrics shown above that can be imported as a dashboard after starting Grafana with Docker. 
 
-1. Before importing the dashboards, add Prometheus as a datasource in the Grafana UI manually. Use the endpoint `http://host.docker.internal:9090`.
+1. Before importing the dashboards, add Prometheus as a datasource in the Grafana UI manually [on this page](http://localhost:3000/connections/datasources). 
+Use this Prometheus server URL, and leave the rest of the settings as is: `http://host.docker.internal:9090`.
 2. Import the dashboard from the Grafana UI using the file `grafana_dashboard_flow_metrics.json`
 3. This will ask for a data source - use the data source created in step 1.
 
