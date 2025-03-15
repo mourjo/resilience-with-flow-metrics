@@ -18,9 +18,9 @@ In this project we focus on the first two flow metrics (WIP and age) to improve 
 ## Components in this System
 There are two servers and two clients in this project
 
-1. **NLS Server** - this is a server that has one HTTP endpoint `/hello` and uses a basic default implementation of a default Spring Boot server. 
+1. **NLS Server** - this is the default no-limit server (NLS) that has one HTTP endpoint `/hello` and uses a basic default implementation of a default Spring Boot server. 
 2. **NLS Client** - this is a Java client that calls the `/hello` endpoint on the NLS server.
-3. **LS Server** - this is a server with the same functionality as the other server, but it drops requests when it detects congestion in the system. 
+3. **LS Server** - this is a WIP-Age limiting server (LS) with the same functionality as the other server, but it drops requests when it detects congestion in the system. 
 4. **LS Client** - this is a Java client that calls the `/hello` endpoint on the LS server.
 
 
