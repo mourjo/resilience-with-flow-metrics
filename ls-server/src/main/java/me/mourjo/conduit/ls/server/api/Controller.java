@@ -48,7 +48,7 @@ public class Controller {
 
         executor = new ThreadPoolExecutor(
             5,              // core pool size
-            5,              // minimum pool size
+            5,              // maximum pool size
             0L,             // keep alive
             TimeUnit.MILLISECONDS,
             queue
