@@ -2,6 +2,8 @@
 
 This project is a demo for using flow metrics to build resilient systems.
 
+This is a companion project to this [blog post](https://www.infoq.com/articles/flow-metrics-microservices/) and [this talk](https://www.youtube.com/watch?v=aDqtSvORFJc). 
+
 ## Background
 Flow metrics are a set of measurements that help organizations understand and improve the flow of work through a process. Flow metrics help detect bottlenecks for software engineering teams that face issues in delivering business value by looking at the following:
 1. **Work in progress (WIP)**: Work items that have entered a given
