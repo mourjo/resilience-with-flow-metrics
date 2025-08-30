@@ -3,7 +3,7 @@
 This project is a demo for using flow metrics to build resilient systems. We use flow metrics to detect and mitigate congestion in web servers.
 
 <p align="center">
-<img src="images/cartoon.png" width="400">
+<img src="images/cartoon.png" width="300">
 </p>
 
 
