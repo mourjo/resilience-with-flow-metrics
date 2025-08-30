@@ -1,6 +1,11 @@
 # Conduit: Resilience with Flow Metrics
 
-This project is a demo for using flow metrics to build resilient systems.
+This project is a demo for using flow metrics to build resilient systems. We use flow metrics to detect and mitigate congestion in web servers.
+
+<p align="center">
+<img src="images/cartoon.png" width="400">
+</p>
+
 
 This is a companion project to this [blog post](https://www.infoq.com/articles/flow-metrics-microservices/) and [this talk](https://www.youtube.com/watch?v=aDqtSvORFJc). 
 
