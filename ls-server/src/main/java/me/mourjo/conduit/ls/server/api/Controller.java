@@ -116,7 +116,7 @@ public class Controller {
             int jitter = r.nextInt(1000);
             Thread.sleep(processingTime + jitter);
             return Map.of(
-                "message", "Hello from LS Server!",
+                "message", "Hello from LS Server! This request took %d ms of processing.".formatted(processingTime + jitter),
                 "request_id", requestId
             );
 
