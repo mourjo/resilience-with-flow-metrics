@@ -144,6 +144,13 @@ docker compose up
 ./start_all.sh
 ```
 
+## Swagger UI
+
+Both servers include a Swagger UI:
+
+- NLS Server: [localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+- LS Server: [localhost:7070/swagger-ui/index.html](http://localhost:7070/swagger-ui/index.html)
+
 ## Monitoring Infrastructure
 
 There is a Grafana dashboard in the file `docker-compose.yml`. The servers and clients emit metrics which
